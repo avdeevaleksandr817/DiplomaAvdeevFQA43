@@ -1,0 +1,1 @@
+{"uuid":"3271e845-e540-4683-8958-a44c353fce03","name":"Test№ 5 Payment On Credit Happy Path","children":["a199ea6d-7382-4104-b655-66919a0b12b9"],"befores":[{"name":"openSource","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1682973333056,"stop":1682973338238}],"afters":[],"start":1682973332946,"stop":1682973359641}
