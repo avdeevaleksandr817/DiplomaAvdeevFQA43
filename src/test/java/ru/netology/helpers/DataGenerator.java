@@ -80,7 +80,7 @@ public class DataGenerator {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CreditRequestEntity {
+    public static class CreditEntity {
         private String id;
         private String bank_id;
         private Timestamp created;

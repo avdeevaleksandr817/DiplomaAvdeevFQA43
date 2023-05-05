@@ -1,65 +1,85 @@
 package ru.netology.helpers;
 
 import lombok.SneakyThrows;
-import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
+
+
+
 public class SQL {
-
-    static String url = System.getProperty("db.url");//Система. Получить Свойство
-    static String user = System.getProperty("db.username");//Система. Получить Свойство
-    static String password = System.getProperty("db.password");//Система. Получить Свойство
+    //Система. Получить Свойство из билд гредл
+    private static String url = System.getProperty("db.url");
+    //Система. Получить Свойство из билд гредл
+    private static String username = System.getProperty("db.username");
+    //Система. Получить Свойство из билд гредл
+    private static String password = System.getProperty("db.password");
+    //ЗапросБегунок бегунок = новый бегун запросов//необходим для выполнения запросов
     private static QueryRunner runner = new QueryRunner();
-
     public SQL() {
     }
-
-
+    //@SneakyThrow позволит избежать требований javac в том, что вы либо перехватываете, либо выбрасываете любые проверенные исключения,
+    // которые операторы в вашем теле метода объявляют, что они генерируют.
+    //@SneakyThrow не проглатывает, не заворачивает в RuntimeException или иным образом не модифицирует какие-либо исключения из перечисленных проверенных типов исключений.
+    // JVM не проверяет непротиворечивость проверенной системы исключений; javac делает, и эта аннотация позволяет отказаться от его механизма.
     @SneakyThrows
     private static Connection getConn() {
-        return DriverManager.getConnection(url, user, password);
+        //Примечание реализации:
+        //Инициализация DriverManager ищет поставщиков услуг с помощью загрузчика класса контекста потока.
+        // Драйверы, загруженные и доступные для приложения, будут зависеть от загрузчика классов контекста потока,
+        // который запускает инициализацию драйвера с помощью DriverManager.
+        //При вызове метода getConnection DriverManager попытается найти подходящий драйвер среди тех,
+        // которые загружаются при инициализации, и тех, которые загружаются явно с использованием того же загрузчика классов, что и текущее приложение
+        Connection connection = DriverManager.getConnection(url, username, password);
+        return connection;
     }
 
+    @SneakyThrows
+    public static DataGenerator.CreditEntity getCreditCardData() {
+        //var
+        //Класс String представляет строки символов. Все строковые литералы в программах на Java, такие как "abc", реализованы как экземпляры этого класса.
+        //Строки постоянны; их значения не могут быть изменены после их создания. Строковые буферы поддерживают изменяемые строки.
+        // Поскольку объекты String неизменяемы, ими можно делиться.
 
-    public static DataGenerator.CreditRequestEntity getCreditCardData() {
+        //запрос = ВЫБРАТЬ * ИЗ кредитного запроса СОРТИРОВАТЬ ПО созданный ОПИСАНИЕ ОГРАНИЧЕНИЕ 1
         var cardDataSQL = "SELECT * FROM credit_request_entity ORDER BY created DESC LIMIT 1";
+        //Попробовать создать (переменная подключение = с помощью метода getConn( Менеджер драйверов. получить соединение с БД(адрес, пользователь, пароль))
         try (var conn = getConn()) {
-            var result = runner.query(conn, cardDataSQL,
-                    new BeanHandler<>(DataGenerator.CreditRequestEntity.class));
+            //query
+            //Выполнить запрос SQL SELECT без каких-либо параметров замены. Вызывающий отвечает за закрытие соединения.
+            //Параметры://conn — соединение для выполнения запроса в.
+            //результат = бегунок вызывает исполнитель запроса( с параметрами соединение, тело запроса, дальше мы говорим как обработать ответ
+            //здесь одна строка из таблицы(BeanHandler) парсит строку по полям из CreditEntity.class
+            var result = runner.query(conn, cardDataSQL,new BeanHandler<>(DataGenerator.CreditEntity.class));
             return result;
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException exception) {//catch (исключение SQL sql Exception)
+            exception.printStackTrace();//Исключение sql. распечатать трассировку стека()
         }
         return null;
     }
-
+    @SneakyThrows
     public static DataGenerator.PaymentEntity getPaymentCardData() {
         var cardDataSQL = "SELECT * FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (var conn = getConn()) {
-            var result = runner.query(conn, cardDataSQL,
-                    new BeanHandler<>(DataGenerator.PaymentEntity.class));
-            return result;
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+            return runner.query(conn, cardDataSQL,new BeanHandler<>(DataGenerator.PaymentEntity.class));
+        } catch (SQLException exception) {//catch (исключение SQL sql Exception)
+            exception.printStackTrace();//Исключение sql. распечатать трассировку стека()
         }
         return null;
     }
-
+    @SneakyThrows
     public static DataGenerator.OrderEntity getTableOrderEntity() {
         var orderEntityDataSQL = "SELECT * FROM order_entity ORDER BY created DESC LIMIT 1";
         try (var conn = getConn()) {
-            var result = runner.query(conn, orderEntityDataSQL,
-                    new BeanHandler<>(DataGenerator.OrderEntity.class));
+            var result = runner.query(conn, orderEntityDataSQL,new BeanHandler<>(DataGenerator.OrderEntity.class));
             return result;
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException exception) {//catch (исключение SQL sql Exception)
+            exception.printStackTrace();//Исключение sql. распечатать трассировку стека()
         }
         return null;
     }
@@ -67,11 +87,17 @@ public class SQL {
     @SneakyThrows
     public static void cleanDatabase() {
         var conn = getConn();
-        runner.execute(conn, "DELETE FROM order_entity");
-        runner.execute(conn, "DELETE FROM payment_entity");
-        runner.execute(conn, "DELETE FROM credit_request_entity");
+        runner.execute(conn, "DELETE FROM order_entity");//удалить из объект заказа = "УДАЛИТЬ ИЗ объекта заказа"
+
+        runner.execute(conn, "DELETE FROM payment_entity");//удалить из Payment Entity = "УДАЛИТЬ ИЗ платежного объекта"
+        runner.execute(conn, "DELETE FROM credit_request_entity");//удалить из объект кредита = "УДАЛИТЬ ИЗ объекта запроса кредита"
+
     }
+
+
 }
+
+
 
 
 

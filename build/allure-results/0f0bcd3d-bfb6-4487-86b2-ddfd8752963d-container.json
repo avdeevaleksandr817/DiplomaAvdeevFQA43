@@ -1,1 +1,0 @@
-{"uuid":"0f0bcd3d-bfb6-4487-86b2-ddfd8752963d","name":"Test№ 4 CardPaymentSadPath","children":["d7dffa76-bea1-43fc-9051-54018b2b466b"],"befores":[{"name":"openSource","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1682970110618,"stop":1682970115385}],"afters":[],"start":1682970110511,"stop":1682970138833}

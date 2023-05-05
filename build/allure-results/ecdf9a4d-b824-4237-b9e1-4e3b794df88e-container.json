@@ -1,1 +1,0 @@
-{"uuid":"ecdf9a4d-b824-4237-b9e1-4e3b794df88e","name":"Test№ 3 CardPaymentHappyPath","children":["a637e905-1ca6-43bc-89ce-22219f7b7e5a"],"befores":[{"name":"openSource","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1682969817052,"stop":1682969831475}],"afters":[],"start":1682969816907,"stop":1682969855349}
