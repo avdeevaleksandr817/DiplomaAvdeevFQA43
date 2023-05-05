@@ -136,4 +136,12 @@ public class MonthHelper {
                 HolderHelper.generateValidHolder(),
                 CVCHelper.generateValidCVC());
     }
+    //ApprovedCard создать Month пустое поле
+    public static DataGenerator.CardData approvedCardWithMonthEmptyField() {
+        return new DataGenerator.CardData(getNumberByStatus("APPROVED"),
+                MonthHelper.generateMonthEmptyField(),
+                YearHelper.generateYear(0),
+                HolderHelper.generateValidHolder(),
+                CVCHelper.generateValidCVC());
+    }
 }

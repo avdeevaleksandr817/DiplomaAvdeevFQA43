@@ -41,7 +41,7 @@ public class YearHelper {
     }
 
     //ApprovedCard создать Year пустое поле
-    public static DataGenerator.CardData approvedCardWithYearOEmptyField() {
+    public static DataGenerator.CardData approvedCardWithYearEmptyField() {
         return new DataGenerator.CardData(getNumberByStatus("APPROVED"),
                 MonthHelper.generateMonth(0),
                 YearHelper.generateYearEmptyField(),

@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 
 public class APIHelper {
     //Спецификация запроса requestSpec = новый построитель спецификаций запросов
-    private static RequestSpecification requestSpec = new RequestSpecBuilder()
+    private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")//установить базовый Uri
             .setPort(8080)//установить порт
             .setAccept(ContentType.JSON)//установить Принять
@@ -25,13 +25,19 @@ public class APIHelper {
                 .post("/api/v1/pay")//тип запроса пост идет на ("/оплата")
                 .then()//ТОГДА
                 .statusCode(200);//код статуса(200)
-//                .extract()//извлечь
-//                .response()//ответ
-//                .asString();//как строку
-//        return createPayment(cardInfo);
+
     }
+    public static int getRequestStatusCodePayment(DataGenerator.CardData cardInfo) {
+        int statusCode =
+                given()
+                        .spec(requestSpec)
+                        .body(cardInfo)
+                        .when()
+                        .post("/api/v1/pay")
+                        .getStatusCode();
 
-
+        return statusCode;
+    }
     public static void createCredit(DataGenerator.CardData cardInfo) {
         given()//ДАНО
                 .spec(requestSpec)///спецификация(запрос спецификации)
@@ -40,12 +46,17 @@ public class APIHelper {
                 .post("/api/v1/credit")//тип запроса пост идет на ("/кредит")
                 .then()//ТОГДА
                 .statusCode(200);//код статуса(200)
-//                .extract()//извлечь
-//                .response()//ответ
-//                .asString();//как строку
 
-//        return createCredit(cardInfo);
     }
+    public static int getRequestStatusCodeCredit(DataGenerator.CardData cardInfo) {
+        int statusCode =
+                given()
+                        .spec(requestSpec)
+                        .body(cardInfo)
+                        .when()
+                        .post("/api/v1/credit")
+                        .getStatusCode();
 
-
+        return statusCode;
+    }
 }

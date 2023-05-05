@@ -149,6 +149,13 @@ public class HolderHelper {
                 HolderHelper.generateHolderSymbols(),
                 CVCHelper.generateValidCVC());
     }
-
+    //ApprovedCard создать владельца пустое поле
+    public static DataGenerator.CardData approvedCardWithHolderEmpty() {
+        return new DataGenerator.CardData(getNumberByStatus("APPROVED"),
+                MonthHelper.generateMonth(0),
+                YearHelper.generateYear(0),
+                HolderHelper.generateHolderEmpty(),
+                CVCHelper.generateValidCVC());
+    }
 
 }

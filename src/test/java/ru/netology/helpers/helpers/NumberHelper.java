@@ -168,5 +168,14 @@ public class NumberHelper {
                 HolderHelper.generateValidHolder(),
                 CVCHelper.generateValidCVC());
     }
+    //поля заполнены валидно, номер действующей карты пустой
+    public static DataGenerator.CardData dataWithCardNumberEmpty() {
+        return new DataGenerator.CardData(
+                NumberHelper.generateEmptyField(),
+                MonthHelper.generateMonth(0),
+                YearHelper.generateYear(0),
+                HolderHelper.generateValidHolder(),
+                CVCHelper.generateValidCVC());
+    }
 
 }

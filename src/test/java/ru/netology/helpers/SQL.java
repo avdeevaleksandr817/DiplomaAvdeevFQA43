@@ -9,24 +9,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-
-
-
 public class SQL {
     //Система. Получить Свойство из билд гредл
-    private static String url = System.getProperty("db.url");
+    private static final String url = System.getProperty("db.url");
     //Система. Получить Свойство из билд гредл
-    private static String username = System.getProperty("db.username");
+    private static final String username = System.getProperty("db.username");
     //Система. Получить Свойство из билд гредл
-    private static String password = System.getProperty("db.password");
+    private static final String password = System.getProperty("db.password");
     //ЗапросБегунок бегунок = новый бегун запросов//необходим для выполнения запросов
-    private static QueryRunner runner = new QueryRunner();
+    private static final QueryRunner runner = new QueryRunner();
+
     public SQL() {
     }
     //@SneakyThrow позволит избежать требований javac в том, что вы либо перехватываете, либо выбрасываете любые проверенные исключения,
     // которые операторы в вашем теле метода объявляют, что они генерируют.
     //@SneakyThrow не проглатывает, не заворачивает в RuntimeException или иным образом не модифицирует какие-либо исключения из перечисленных проверенных типов исключений.
     // JVM не проверяет непротиворечивость проверенной системы исключений; javac делает, и эта аннотация позволяет отказаться от его механизма.
+
     @SneakyThrows
     private static Connection getConn() {
         //Примечание реализации:
@@ -35,8 +34,8 @@ public class SQL {
         // который запускает инициализацию драйвера с помощью DriverManager.
         //При вызове метода getConnection DriverManager попытается найти подходящий драйвер среди тех,
         // которые загружаются при инициализации, и тех, которые загружаются явно с использованием того же загрузчика классов, что и текущее приложение
-        Connection connection = DriverManager.getConnection(url, username, password);
-        return connection;
+        return DriverManager.getConnection(url, username, password);
+
     }
 
     @SneakyThrows

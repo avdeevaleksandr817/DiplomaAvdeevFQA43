@@ -92,4 +92,12 @@ public class CVCHelper {
                 HolderHelper.generateValidHolder(),
                 CVCHelper.generateInvalidCVCWith3Symbols());
     }
+    //ApprovedCard создать CVC пустое поле
+    public static DataGenerator.CardData approvedCardWithCVCEmpty() {
+        return new DataGenerator.CardData(getNumberByStatus("APPROVED"),
+                MonthHelper.generateMonth(0),
+                YearHelper.generateYear(0),
+                HolderHelper.generateValidHolder(),
+                CVCHelper.generateEmptyCVC());
+    }
 }
