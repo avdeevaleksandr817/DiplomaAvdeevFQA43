@@ -11,7 +11,7 @@ public class APIHelper {
     //Спецификация запроса requestSpec = новый построитель спецификаций запросов
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")//установить базовый Uri
-            .setPort(8080)//установить порт
+            .setPort(9999)//установить порт
             .setAccept(ContentType.JSON)//установить Принять
             .setContentType(ContentType.JSON)//установить тип контента
             .log(LogDetail.ALL)//журнал(Детали журнала.ВСЕ)
@@ -22,7 +22,7 @@ public class APIHelper {
                 .spec(requestSpec)///спецификация(запрос спецификации)
                 .body(cardInfo)//тело запроса (информация о карте)
                 .when()//КОГДА
-                .post("/api/v1/pay")//тип запроса пост идет на ("/оплата")
+                .post("/payment")//тип запроса пост идет на ("/оплата")
                 .then()//ТОГДА
                 .statusCode(200);//код статуса(200)
 
@@ -33,7 +33,7 @@ public class APIHelper {
                         .spec(requestSpec)
                         .body(cardInfo)
                         .when()
-                        .post("/api/v1/pay")
+                        .post("/payment")
                         .getStatusCode();
 
         return statusCode;
@@ -43,7 +43,7 @@ public class APIHelper {
                 .spec(requestSpec)///спецификация(запрос спецификации)
                 .body(cardInfo)//тело запроса (информация о карте)
                 .when()//КОГДА
-                .post("/api/v1/credit")//тип запроса пост идет на ("/кредит")
+                .post("/credit")//тип запроса пост идет на ("/кредит")
                 .then()//ТОГДА
                 .statusCode(200);//код статуса(200)
 
@@ -54,7 +54,7 @@ public class APIHelper {
                         .spec(requestSpec)
                         .body(cardInfo)
                         .when()
-                        .post("/api/v1/credit")
+                        .post("/credit")
                         .getStatusCode();
 
         return statusCode;

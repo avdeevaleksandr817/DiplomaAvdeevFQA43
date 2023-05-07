@@ -87,12 +87,12 @@ public class PayPage {
     }
 
 
-    //Сообщение видимое Операция одобрена Банком + ожидание 10 секунд
-    public void shouldSuccessNotification() {successNote.shouldBe(Condition.visible, Duration.ofSeconds(10));
+    //Сообщение видимое Операция одобрена Банком + ожидание 5 секунд
+    public void shouldSuccessNotification() {successNote.shouldBe(Condition.visible, Duration.ofSeconds(5));
     }
-    //Сообщение видимое Операция отклонена Банком + ожидание 10 секунд
+    //Сообщение видимое Операция отклонена Банком + ожидание 5 секунд
     public void shouldFailureNotification() {
-        failureNote.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        failureNote.shouldBe(Condition.visible, Duration.ofSeconds(5));
     }
 
 }

@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class SQL {
+public class SQLHelper {
     //Система. Получить Свойство из билд гредл
     private static final String url = System.getProperty("db.url");
     //Система. Получить Свойство из билд гредл
@@ -17,9 +17,9 @@ public class SQL {
     //Система. Получить Свойство из билд гредл
     private static final String password = System.getProperty("db.password");
     //ЗапросБегунок бегунок = новый бегун запросов//необходим для выполнения запросов
-    private static final QueryRunner runner = new QueryRunner();
+    public static final QueryRunner runner = new QueryRunner();
 
-    public SQL() {
+    public SQLHelper() {
     }
     //@SneakyThrow позволит избежать требований javac в том, что вы либо перехватываете, либо выбрасываете любые проверенные исключения,
     // которые операторы в вашем теле метода объявляют, что они генерируют.
@@ -54,28 +54,29 @@ public class SQL {
             //Параметры://conn — соединение для выполнения запроса в.
             //результат = бегунок вызывает исполнитель запроса( с параметрами соединение, тело запроса, дальше мы говорим как обработать ответ
             //здесь одна строка из таблицы(BeanHandler) парсит строку по полям из CreditEntity.class
-            var result = runner.query(conn, cardDataSQL,new BeanHandler<>(DataGenerator.CreditEntity.class));
-            return result;
+            return runner.query(conn, cardDataSQL, new BeanHandler<>(DataGenerator.CreditEntity.class));
         } catch (SQLException exception) {//catch (исключение SQL sql Exception)
             exception.printStackTrace();//Исключение sql. распечатать трассировку стека()
         }
         return null;
     }
+
     @SneakyThrows
     public static DataGenerator.PaymentEntity getPaymentCardData() {
         var cardDataSQL = "SELECT * FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (var conn = getConn()) {
-            return runner.query(conn, cardDataSQL,new BeanHandler<>(DataGenerator.PaymentEntity.class));
+            return runner.query(conn, cardDataSQL, new BeanHandler<>(DataGenerator.PaymentEntity.class));
         } catch (SQLException exception) {//catch (исключение SQL sql Exception)
             exception.printStackTrace();//Исключение sql. распечатать трассировку стека()
         }
         return null;
     }
+
     @SneakyThrows
     public static DataGenerator.OrderEntity getTableOrderEntity() {
         var orderEntityDataSQL = "SELECT * FROM order_entity ORDER BY created DESC LIMIT 1";
         try (var conn = getConn()) {
-            var result = runner.query(conn, orderEntityDataSQL,new BeanHandler<>(DataGenerator.OrderEntity.class));
+            var result = runner.query(conn, orderEntityDataSQL, new BeanHandler<>(DataGenerator.OrderEntity.class));
             return result;
         } catch (SQLException exception) {//catch (исключение SQL sql Exception)
             exception.printStackTrace();//Исключение sql. распечатать трассировку стека()
@@ -87,13 +88,10 @@ public class SQL {
     public static void cleanDatabase() {
         var conn = getConn();
         runner.execute(conn, "DELETE FROM order_entity");//удалить из объект заказа = "УДАЛИТЬ ИЗ объекта заказа"
-
         runner.execute(conn, "DELETE FROM payment_entity");//удалить из Payment Entity = "УДАЛИТЬ ИЗ платежного объекта"
         runner.execute(conn, "DELETE FROM credit_request_entity");//удалить из объект кредита = "УДАЛИТЬ ИЗ объекта запроса кредита"
 
     }
-
-
 }
 
 

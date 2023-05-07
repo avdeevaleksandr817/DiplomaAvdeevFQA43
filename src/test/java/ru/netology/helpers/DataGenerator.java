@@ -12,7 +12,7 @@ public class DataGenerator {
 
     //один спецсимвол
     public static String symbols(String locale) {
-        var symbol = new String[]{"!", "", "№", ";", "%", ":", "?", "*", "(", ")", "_", "-", "+", "=", "/", "~", "@", "#", "$", "&"};
+        var symbol = new String[]{"!", "№", ";", "%", ":", "?", "*", "(", ")", "_", "-", "+", "=", "/", "~", "@", "#", "$", "&"};
         return symbol[new Random().nextInt(symbol.length)];
     }
 
@@ -48,7 +48,7 @@ public class DataGenerator {
     }
 
     //форма все поля пустые
-    public static CardData CardEmptyField() {
+    public static CardData CardEmptyFields() {
         return new CardData(
                 NumberHelper.generateEmptyField(),
                 MonthHelper.generateMonthEmptyField(),
@@ -67,6 +67,7 @@ public class DataGenerator {
         String holder;
         String cvc;
     }
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -87,7 +88,6 @@ public class DataGenerator {
         private String status;
     }
 
-
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -98,6 +98,4 @@ public class DataGenerator {
         private String status;
         private String transaction_id;
     }
-
-
 }

@@ -1,10 +1,11 @@
 package ru.netology.test.ui;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.netology.helpers.DataGenerator;
+import ru.netology.helpers.SQLHelper;
 import ru.netology.page.MainPage;
 import ru.netology.page.PayPage;
 
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import static com.codeborne.selenide.Selenide.open;
 
 public class TestUIAllFields {
-    static MainPage mainPage = new MainPage();
+    MainPage mainPage = new MainPage();
     PayPage payPage = new PayPage();
 
     @BeforeEach
@@ -21,7 +22,20 @@ public class TestUIAllFields {
         open("http://localhost:8080");
 
     }
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 
+    @BeforeEach
+    public void cleanTable() {
+        SQLHelper.cleanDatabase();
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
     //    Тестирование UI
     //успешный переход на оплату картой
     @Test
@@ -124,8 +138,7 @@ public class TestUIAllFields {
     public void shouldNotificationEmptyField() throws InterruptedException {
         mainPage.choosePaymentCard();//выбрать оплату по карте
         TimeUnit.SECONDS.sleep(10);//ожидание
-        payPage.fillCardData(DataGenerator.CardEmptyField());
-
+        payPage.fillCardData(DataGenerator.CardEmptyFields());
 
         payPage.shouldEmptyFieldNotification();
         payPage.shouldImproperFormatNotificationHidden();
