@@ -143,4 +143,16 @@ public class TestUIAllFields {
         payPage.shouldEmptyFieldNotification();
         payPage.shouldImproperFormatNotificationHidden();
     }
+    //    Заполнение всех полей валидными данными после попытки отправки пустой формы, предупреждения должны исчезать
+    @Test//Баг надписи не исчезают
+    @DisplayName("Test№ 10 No notification about empty field below fields after entering valid data")
+    public void shouldNotNotificationValidDataField() throws InterruptedException {
+        mainPage.choosePaymentCard();//выбрать оплату по карте
+        TimeUnit.SECONDS.sleep(10);//ожидание
+        payPage.continueButton.click();
+        payPage.fillCardData(DataGenerator.generateDataWithApprovedCard());
+
+        payPage.shouldNotNotification();
+
+    }
 }

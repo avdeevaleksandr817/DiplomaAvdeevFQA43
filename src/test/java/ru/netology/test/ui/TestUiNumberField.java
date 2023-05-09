@@ -62,12 +62,13 @@ public class TestUiNumberField extends TestUIAllFields {
 
     //    Заполнение поля "Номер карты" 16 нулями, остальные поля заполнены валидно* в форме "Оплата по карте" тура "Путешествие дня"
     //    Ожидаемый результат: под полем "Номер карты" появиться сообщения о появление сообщения об отказе в оплате тура
-    @Test//OK
+    @Test//Баг два сообщения
     @DisplayName("CardNumber Test№ 5 Card Number 16 zero")
     public void dataWithCardNumber16Zero() {
         payPage.fillCardData(NumberHelper.dataWithCardNumber16zero());//поля заполнены валидно, номером действующей карты 16 zero
 
         payPage.shouldFailureNotification();//Сообщение видимое Операция отклонена Банком
+        payPage.shouldSuccessNotificationHidden();//Сообщение операция Одобрена не должно быть видимым
     }
 
 

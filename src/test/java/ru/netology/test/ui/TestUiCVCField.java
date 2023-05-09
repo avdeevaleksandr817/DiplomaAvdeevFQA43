@@ -69,4 +69,15 @@ public class TestUiCVCField extends TestUIAllFields {
 
         payPage.shouldImproperFormatNotification();//видимое отображение сообщения Неверный формат
     }
+
+    //    Пустое поля "CVC/CVV", остальные поля заполнены валидно в форме "Оплата по карте" тура "Путешествие дня"
+    //    Ожидаемый результат: под полем "CVC/CVV" появление сообщения поле обязательно для заполнения
+    @Test//Баг подписи
+    @DisplayName("CVC Test№ 6 approved Card With CVC Empty")
+    public void approvedCardWithCVCEmpty() {
+        payPage.fillCardData(CVCHelper.approvedCardWithCVCEmpty());//поля заполнены валидно, номером CVC 3 Symbols
+
+        payPage.shouldImproperFormatNotificationHidden();//не видимое сообщения Неверный формат
+        payPage.shouldEmptyFieldNotification();//видимое Сообщение поле обязательно для заполнения
+    }
 }

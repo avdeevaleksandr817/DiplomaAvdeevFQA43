@@ -34,7 +34,7 @@ public class TestUiMonthField extends TestUIAllFields {
     public void approvedCardWithMonthOf00numbers() {
         payPage.fillCardData(MonthHelper.approvedCardWithMonthOf00numbers());
 
-        payPage.shouldInvalidExpiredDateNotification();//Неверно указан срок действия карты
+        payPage.shouldEmptyFieldNotification();//видимое Сообщение Поле обязательно для заполнения
     }
 
 
@@ -68,6 +68,7 @@ public class TestUiMonthField extends TestUIAllFields {
         payPage.fillCardData(MonthHelper.approvedCardWithMonthOf13numbers());
 
         payPage.shouldInvalidExpiredDateNotification();//Неверно указан срок действия карты
+        payPage.shouldEmptyFieldNotification();//видимое Сообщение Поле обязательно для заполнения
     }
 
 

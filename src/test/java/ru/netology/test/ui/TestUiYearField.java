@@ -59,14 +59,14 @@ public class TestUiYearField extends TestUIAllFields {
     }
 
 
-    //    Заполнение поля "Год" 3 цифры, остальные поля заполнены валидно в форме "Оплата по карте" тура "Путешествие дня"
-    //    Ожидаемый результат: значение обрезается до 2 цифр
+    //    Заполнение поля "Год" 2015, остальные поля заполнены валидно в форме "Оплата по карте" тура "Путешествие дня"
+    //    Ожидаемый результат: истёк срок действия карты
     @Test//Баг можно ввести значение меньше валидного
-    @DisplayName("Year Test№ 5 approved Card With Year Of 3numbers")
-    public void approvedCardWithYearOf3numbers() {
-        payPage.fillCardData(YearHelper.approvedCardWithYearOf3numbers());
+    @DisplayName("Year Test№ 5 approved Card With Year 2015")
+    public void approvedCardWithYear2015() {
+        payPage.fillCardData(YearHelper.approvedCardWithYear2015());
 
-        payPage.shouldInvalidExpiredDateNotification();//Неверно указан срок действия карты
+        payPage.shouldExpiredDatePassNotification();//истёк срок действия карты
     }
 
 

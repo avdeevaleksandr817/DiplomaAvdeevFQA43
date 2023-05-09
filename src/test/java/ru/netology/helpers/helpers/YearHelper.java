@@ -81,10 +81,10 @@ public class YearHelper {
                 CVCHelper.generateValidCVC());
     }
     //ApprovedCard создать Year из 3 цифр
-    public static DataGenerator.CardData approvedCardWithYearOf3numbers() {
+    public static DataGenerator.CardData approvedCardWithYear2015() {
         return new DataGenerator.CardData(getNumberByStatus("APPROVED"),
                 MonthHelper.generateMonth(0),
-                YearHelper.generateYearWith3numbers(),
+                YearHelper.generateYear(-8),
                 HolderHelper.generateValidHolder(),
                 CVCHelper.generateValidCVC());
     }

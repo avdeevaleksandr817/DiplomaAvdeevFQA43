@@ -55,7 +55,7 @@ public class TestUiHolderField extends TestUIAllFields {
     public void approvedCardWithHolderStartAndEndHyphens() {
         payPage.fillCardData(HolderHelper.approvedCardWithHolderStartAndEndHyphens());//пользователь дефисы в начале и конце
 
-        payPage.shouldImproperFormatNotification();
+        payPage.shouldImproperFormatNotification();//неверный формат
     }
 
     //    Заполнение поля "Владелец" цифрами, остальные поля заполнены валидно в форме "Оплата по карте" тура "Путешествие дня"
@@ -71,7 +71,7 @@ public class TestUiHolderField extends TestUIAllFields {
 
     //    Заполнение поля "Владелец" максимальным количеством букв на латинице в одно слово, остальные поля заполнены валидно* в форме "Оплата по карте" тура "Путешествие дня"
     //    Ожидаемый результат: появление сообщения об успешной оплате тура
-    @Test//Баг возможны возможно ввести 1001Letter нет ограничения по вводу
+    @Test//Баг возможно ввести 1001Letter нет ограничения по вводу
     @DisplayName("Holder Test№ 6 Approved Card With Holder 1001Letter")
     public void approvedCardWithHolder1001Letter() {
         payPage.fillCardData(HolderHelper.approvedCardWithHolder1001Letter());//пользователь 1001Letter

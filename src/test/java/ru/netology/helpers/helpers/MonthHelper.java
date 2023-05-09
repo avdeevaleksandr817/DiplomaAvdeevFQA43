@@ -78,7 +78,7 @@ public class MonthHelper {
     public static DataGenerator.CardData approvedCardWithMonthOf00numbers() {
         return new DataGenerator.CardData(getNumberByStatus("APPROVED"),
                 MonthHelper.generateMonthWith00numbers(),
-                YearHelper.generateYear(0),
+                YearHelper.generateYear(1),
                 HolderHelper.generateValidHolder(),
                 CVCHelper.generateValidCVC());
     }
