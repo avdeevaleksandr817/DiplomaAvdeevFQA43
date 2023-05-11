@@ -12,7 +12,7 @@ public class TestUiYearField extends TestUIAllFields {
     @BeforeEach
     void setUpChoosePaymentCard() throws InterruptedException {
         mainPage.choosePaymentCard();//выбрать оплату по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+        TimeUnit.SECONDS.sleep(6);//ожидание
     }
 
     //    Оставление поля "Год" пустым, остальные поля заполнены валидно в форме "Оплата по карте" тура "Путешествие дня"

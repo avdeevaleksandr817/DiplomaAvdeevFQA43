@@ -4,14 +4,17 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
 import org.junit.jupiter.api.*;
+import ru.netology.helpers.APIHelper;
 import ru.netology.helpers.DataGenerator;
 import ru.netology.helpers.SQLHelper;
 import ru.netology.page.MainPage;
 import ru.netology.page.PayPage;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestUIAllFields {
     MainPage mainPage = new MainPage();
@@ -22,9 +25,16 @@ public class TestUIAllFields {
         open("http://localhost:8080");
 
     }
+
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @BeforeEach
+    void setUpChoosePaymentCard() throws InterruptedException {
+        mainPage.choosePaymentCard();//выбрать оплату по карте
+        TimeUnit.SECONDS.sleep(6);//ожидание
     }
 
     @BeforeEach
@@ -36,6 +46,7 @@ public class TestUIAllFields {
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
     }
+
     //    Тестирование UI
     //успешный переход на оплату картой
     @Test
@@ -58,9 +69,8 @@ public class TestUIAllFields {
     //    (номер карты заполнен с пробелами после каждых 4 символов) Ожидаемый результат: появление сообщения об успешной оплате тура
     @Test
     @DisplayName("Test№ 3 CardPaymentHappyPath")
-    public void cardPaymentHappyPath() throws InterruptedException {
-        mainPage.choosePaymentCard();//выбрать оплату по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+    public void cardPaymentHappyPath() {
+
         payPage.fillCardData(DataGenerator.generateDataWithApprovedCard());//форму заполнить валидно картой с согласием
 
         payPage.shouldNotNotification();//отсутствие сообщения при валидном заполнении
@@ -71,9 +81,8 @@ public class TestUIAllFields {
     //    (номер карты заполнен с пробелами после каждых 4 символов) Ожидаемый результат: появление сообщения об отказе в оплате тура
     @Test//Баг карта с отказом выдает согласие
     @DisplayName("Test№ 4 CardPaymentSadPath")
-    public void cardPaymentSadPath() throws InterruptedException {
-        mainPage.choosePaymentCard();//выбрать оплату по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+    public void cardPaymentSadPath() {
+
         payPage.fillCardData(DataGenerator.generateDataWithDeclineCard());//форму заполнить валидно картой с отказом
 
         payPage.shouldNotNotification();//отсутствие сообщения при валидном заполнении
@@ -84,9 +93,8 @@ public class TestUIAllFields {
     //    (номер карты заполнен с пробелами после каждых 4 символов) Ожидаемый результат: появление сообщения об успешной взятие кредита
     @Test
     @DisplayName("Test№ 5 Payment On Credit Happy Path")
-    public void paymentOnCreditHappyPath() throws InterruptedException {
-        mainPage.chooseCreditOnCard();//выбрать кредит по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+    public void paymentOnCreditHappyPath() {
+
         payPage.fillCardData(DataGenerator.generateDataWithApprovedCard());//форму заполнить валидно картой с согласием
 
         payPage.shouldSuccessNotification();//сообщение одобрения банком
@@ -96,9 +104,8 @@ public class TestUIAllFields {
     //    (номер карты заполнен с пробелами после каждых 4 символов) Ожидаемый результат: появление сообщения об отказе во взятие кредита
     @Test//Баг по карте с отказом банк выдает согласие
     @DisplayName("Test№ 6 paymentOnCreditSadPath")
-    public void paymentOnCreditSadPath() throws InterruptedException {
-        mainPage.chooseCreditOnCard();//выбрать кредит по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+    public void paymentOnCreditSadPath() {
+
         payPage.fillCardData(DataGenerator.generateDataWithDeclineCard());//форму заполнить валидно картой с отказом
 
         payPage.shouldFailureNotification();//отказ банком
@@ -108,9 +115,8 @@ public class TestUIAllFields {
     //    "Кредит по данным карты" Ожидаемый результат: форма переключиться, поля останутся заполненными теми же данными
     @Test//Баг форма очищается
     @DisplayName("Test№ 7 Switching from a completed card payment form to a credit, card data is not reset")
-    public void switchingCardPaymentToCreditDataNotResetData() throws InterruptedException {
-        mainPage.choosePaymentCard();//выбрать оплату по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+    public void switchingCardPaymentToCreditDataNotResetData() {
+
         payPage.fillCardData(DataGenerator.generateDataWithApprovedCard());//форму заполнить валидно картой с согласием
         mainPage.chooseCreditOnCard();//выбрать кредит по карте
         payPage.continueButton.click();
@@ -122,9 +128,8 @@ public class TestUIAllFields {
     //    на форму "Оплата по карте" Ожидаемый результат: форма переключиться, поля останутся заполненными теми же данными
     @Test//Баг форма очищается
     @DisplayName("Test№ 8 Switching from credit according to card data to Payment by card without data reset")
-    public void switchingCreditToCardPaymentNotResetData() throws InterruptedException {
-        mainPage.chooseCreditOnCard();//выбрать оплату по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+    public void switchingCreditToCardPaymentNotResetData() {
+
         payPage.fillCardData(DataGenerator.generateDataWithApprovedCard());//форму заполнить валидно картой с согласием
         mainPage.choosePaymentCard();//выбрать кредит по карте
         payPage.continueButton.click();
@@ -135,20 +140,19 @@ public class TestUIAllFields {
     //    Оставление всех полей пустыми Ожидаемый результат: под всеми полями появиться предупреждение об пустом поле, невозможно отправить форму
     @Test//Баг надписи не соответствуют
     @DisplayName("Test№ 9 All field empty should Empty Field Notification")
-    public void shouldNotificationEmptyField() throws InterruptedException {
-        mainPage.choosePaymentCard();//выбрать оплату по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+    public void shouldNotificationEmptyField() {
+
         payPage.fillCardData(DataGenerator.CardEmptyFields());
 
         payPage.shouldEmptyFieldNotification();
         payPage.shouldImproperFormatNotificationHidden();
     }
+
     //    Заполнение всех полей валидными данными после попытки отправки пустой формы, предупреждения должны исчезать
     @Test//Баг надписи не исчезают
     @DisplayName("Test№ 10 No notification about empty field below fields after entering valid data")
-    public void shouldNotNotificationValidDataField() throws InterruptedException {
-        mainPage.choosePaymentCard();//выбрать оплату по карте
-        TimeUnit.SECONDS.sleep(10);//ожидание
+    public void shouldNotNotificationValidDataField() {
+
         payPage.continueButton.click();
         payPage.fillCardData(DataGenerator.generateDataWithApprovedCard());
 

@@ -17,46 +17,44 @@ public class APIHelper {
             .log(LogDetail.ALL)//журнал(Детали журнала.ВСЕ)
             .build();//собрать
 
-    public static void createPayment(DataGenerator.CardData cardInfo) {
-        given()//ДАНО
-                .spec(requestSpec)///спецификация(запрос спецификации)
-                .body(cardInfo)//тело запроса (информация о карте)
-                .when()//КОГДА
-                .post("/payment")//тип запроса пост идет на ("/оплата")
-                .then()//ТОГДА
-                .statusCode(200);//код статуса(200)
-
-    }
+//    public static void createPayment(DataGenerator.CardData cardInfo) {
+//        given()//ДАНО
+//                .spec(requestSpec)///спецификация(запрос спецификации)
+//                .body(cardInfo)//тело запроса (информация о карте)
+//                .when()//КОГДА
+//                .post("/payment")//тип запроса пост идет на ("/оплата")
+//                .then()//ТОГДА
+//                .statusCode(200);//код статуса(200)
+//
+//    }
     public static int getRequestStatusCodePayment(DataGenerator.CardData cardInfo) {
-        int statusCode =
-                given()
-                        .spec(requestSpec)
-                        .body(cardInfo)
-                        .when()
-                        .post("/payment")
-                        .getStatusCode();
 
+        int statusCode = given()
+                .spec(requestSpec)
+                .body(cardInfo)
+                .when()
+                .post("/payment")
+                .getStatusCode();
         return statusCode;
     }
-    public static void createCredit(DataGenerator.CardData cardInfo) {
-        given()//ДАНО
-                .spec(requestSpec)///спецификация(запрос спецификации)
-                .body(cardInfo)//тело запроса (информация о карте)
-                .when()//КОГДА
-                .post("/credit")//тип запроса пост идет на ("/кредит")
-                .then()//ТОГДА
-                .statusCode(200);//код статуса(200)
-
-    }
+//    public static void createCredit(DataGenerator.CardData cardInfo) {
+//        given()//ДАНО
+//                .spec(requestSpec)///спецификация(запрос спецификации)
+//                .body(cardInfo)//тело запроса (информация о карте)
+//                .when()//КОГДА
+//                .post("/credit")//тип запроса пост идет на ("/кредит")
+//                .then()//ТОГДА
+//                .statusCode(200);//код статуса(200)
+//
+//    }
     public static int getRequestStatusCodeCredit(DataGenerator.CardData cardInfo) {
-        int statusCode =
-                given()
-                        .spec(requestSpec)
-                        .body(cardInfo)
-                        .when()
-                        .post("/credit")
-                        .getStatusCode();
 
+        int statusCode = given()
+                .spec(requestSpec)
+                .body(cardInfo)
+                .when()
+                .post("/credit")
+                .getStatusCode();
         return statusCode;
     }
 }

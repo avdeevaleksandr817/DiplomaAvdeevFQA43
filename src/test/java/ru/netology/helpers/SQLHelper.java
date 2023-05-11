@@ -66,6 +66,7 @@ public class SQLHelper {
         var cardDataSQL = "SELECT * FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (var conn = getConn()) {
             return runner.query(conn, cardDataSQL, new BeanHandler<>(DataGenerator.PaymentEntity.class));
+
         } catch (SQLException exception) {//catch (исключение SQL sql Exception)
             exception.printStackTrace();//Исключение sql. распечатать трассировку стека()
         }
