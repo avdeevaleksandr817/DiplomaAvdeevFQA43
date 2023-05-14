@@ -7,6 +7,7 @@ branches:
     - main
 
 build: off
+
 environment:
   matrix:
     - db: MySQL
@@ -19,10 +20,10 @@ for:
         - db: MySQL
 
     install:
-      - chmod +x gradlew
-      - docker-compose version
-      - docker-compose build
-      - docker-compose up &
+    #  - chmod +x gradlew
+    #  - docker-compose version
+    #  - docker-compose build
+    #  - docker-compose up &
       - sleep 20
       - java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
       - sleep 20
@@ -30,23 +31,23 @@ for:
     build_script:
       - chmod +x gradlew
       - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:mysql://localhost:3306/app
-    after_build:
-      - 7z a results.zip build/reports/tests
-    artifacts:
-      - path: results.zip
-    on_failure:
-      - 7z a results.zip build/reports/tests
-      - appveyor PushArtifact results.zip
+#    after_build:
+#      - 7z a results.zip build/reports/tests
+#    artifacts:
+#      - path: results.zip
+#    on_failure:
+#      - 7z a results.zip build/reports/tests
+#      - appveyor PushArtifact results.zip
 
   - matrix:
       only:
         - db: PostgreSQL
 
     install:
-      - chmod +x gradlew
-      - docker-compose version
-      - docker-compose build
-      - docker-compose up &
+#      - chmod +x gradlew
+#      - docker-compose version
+#      - docker-compose build
+#      - docker-compose up &
       - sleep 20
       - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
       - sleep 20
@@ -54,10 +55,10 @@ for:
     build_script:
       - chmod +x gradlew
       - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
-    after_build:
-      - 7z a results.zip build/reports/tests
-    artifacts:
-      - path: results.zip
-    on_failure:
-      - 7z a results.zip build/reports/tests
-      - appveyor PushArtifact results.zip
+#    after_build:
+#      - 7z a results.zip build/reports/tests
+#    artifacts:
+#      - path: results.zip
+#    on_failure:
+#      - 7z a results.zip build/reports/tests
+#      - appveyor PushArtifact results.zip
