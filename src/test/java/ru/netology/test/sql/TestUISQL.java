@@ -43,7 +43,7 @@ public class TestUISQL {
 
     //    Успешная оплата тура "Путешествие дня" при валидном заполнение полей формы "Оплата по карте" по действующей карте
     //    (номер карты заполнен с пробелами после каждых 4 символов) Ожидаемый результат: появление сообщения об успешной оплате тура
-    @Test
+    @Test//OK
     @DisplayName("TestUISQL № 1 CardPaymentHappyPath")
     public void cardPaymentHappyPath() throws InterruptedException {
         mainPage.choosePaymentCard();//выбрать оплату по карте
@@ -75,7 +75,7 @@ public class TestUISQL {
 
     //     при пустых полях формы "Оплата по карте"
     //    Ожидаемый результат: нет записей в БД
-    @Test
+    @Test//OK
     @DisplayName("TestUISQL № 3 CardPaymentEmptyPath")
     public void cardPaymentEmptyPath() throws InterruptedException {
         mainPage.choosePaymentCard();//выбрать оплату по карте
@@ -92,7 +92,7 @@ public class TestUISQL {
 
     //    Успешная оплата тура "Путешествие дня" при валидном заполнение полей формы "Оплата по карте" по действующей карте
     //    (номер карты заполнен с пробелами после каждых 4 символов) Ожидаемый результат: появление сообщения об успешной оплате тура
-    @Test
+    @Test//OK
     @DisplayName("TestUISQL № 4 credit On Card Happy Path")
     public void creditOnCardHappyPath() throws InterruptedException {
         mainPage.chooseCreditOnCard();//выбрать кредит по карте
@@ -124,7 +124,7 @@ public class TestUISQL {
 
     //     при пустых полях формы "Оплата по карте"
     //    Ожидаемый результат: нет записей в БД
-    @Test
+    @Test//OK
     @DisplayName("TestUISQL № 6 credit On Card Empty Path")
     public void creditOnCardEmptyPath() throws InterruptedException {
         mainPage.chooseCreditOnCard();//выбрать кредит по карте

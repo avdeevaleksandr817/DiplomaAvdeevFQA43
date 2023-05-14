@@ -1,13 +1,32 @@
 package ru.netology.test.ui;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
+import ru.netology.helpers.SQLHelper;
 import ru.netology.helpers.helpers.NumberHelper;
+import ru.netology.page.MainPage;
+import ru.netology.page.PayPage;
 
 import java.util.concurrent.TimeUnit;
 
-public class TestUiNumberField extends TestUIAllFields {
+import static com.codeborne.selenide.Selenide.open;
+
+public class TestUiNumberField {
+
+    MainPage mainPage = new MainPage();
+    PayPage payPage = new PayPage();
+
+    @BeforeEach
+    public void openSource() {
+        open("http://localhost:8080");
+
+    }
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 
     @BeforeEach
     void setUpChoosePaymentCard() throws InterruptedException {
@@ -15,6 +34,15 @@ public class TestUiNumberField extends TestUIAllFields {
         TimeUnit.SECONDS.sleep(6);//ожидание
     }
 
+    @BeforeEach
+    public void cleanTable() {
+        SQLHelper.cleanDatabase();
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
 
     //    Заполнение поля "Номер карты" номером действующей карты без пробелов, остальные поля заполнены валидно в форме "Оплата по карте" тура "Путешествие дня"
     //    Ожидаемый результат: появление сообщения об успешной оплате тура

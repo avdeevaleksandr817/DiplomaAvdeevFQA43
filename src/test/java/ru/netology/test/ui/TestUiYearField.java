@@ -1,18 +1,47 @@
 package ru.netology.test.ui;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
+import ru.netology.helpers.SQLHelper;
 import ru.netology.helpers.helpers.YearHelper;
+import ru.netology.page.MainPage;
+import ru.netology.page.PayPage;
 
 import java.util.concurrent.TimeUnit;
 
-public class TestUiYearField extends TestUIAllFields {
+import static com.codeborne.selenide.Selenide.open;
+
+public class TestUiYearField {
+
+    MainPage mainPage = new MainPage();
+    PayPage payPage = new PayPage();
+
+    @BeforeEach
+    public void openSource() {
+        open("http://localhost:8080");
+
+    }
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 
     @BeforeEach
     void setUpChoosePaymentCard() throws InterruptedException {
         mainPage.choosePaymentCard();//выбрать оплату по карте
         TimeUnit.SECONDS.sleep(6);//ожидание
+    }
+
+    @BeforeEach
+    public void cleanTable() {
+        SQLHelper.cleanDatabase();
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
     }
 
     //    Оставление поля "Год" пустым, остальные поля заполнены валидно в форме "Оплата по карте" тура "Путешествие дня"
@@ -101,7 +130,6 @@ public class TestUiYearField extends TestUIAllFields {
 
         payPage.shouldImproperFormatNotification();//отображение сообщения Неверный формат
     }
-
 
     //    Заполнение поля "Год" буквами кириллицы, остальные поля заполнены валидно в форме "Оплата по карте" тура "Путешествие дня"
     //    Ожидаемый результат: под полем "Год" появиться предупреждение об недопустимых символах
