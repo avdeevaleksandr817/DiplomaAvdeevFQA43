@@ -23,7 +23,7 @@ for:
     install:
       - sudo curl -SL https://github.com/docker/compose/releases/download/v2.7.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
       - sudo chmod +x /usr/local/bin/docker-compose
-      - docker-compose.yml up -d
+      - sudo docker-compose -f /home/appveyor/projects/diploma/docker-compose.yml up -d
       - sleep 20
       - java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
       - sleep 20
@@ -31,7 +31,7 @@ for:
     build_script:
       - chmod +x gradlew
       - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:mysql://localhost:3306/app
-      - docker-compose down
+      - sudo docker-compose down
 
   -
     matrix:
@@ -41,7 +41,7 @@ for:
     install:
       - sudo curl -SL https://github.com/docker/compose/releases/download/v2.7.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
       - sudo chmod +x /usr/local/bin/docker-compose
-      - docker-compose.yml up -d
+      - sudo docker-compose -f /home/appveyor/projects/diploma/docker-compose.yml up -d
       - sleep 20
       - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
       - sleep 20
@@ -49,4 +49,4 @@ for:
     build_script:
       - chmod +x gradlew
       - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
-      - docker-compose down
+      - sudo docker-compose down
