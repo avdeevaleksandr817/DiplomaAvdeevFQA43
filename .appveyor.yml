@@ -19,13 +19,13 @@ for:
       only:
         - db: MySQL
 
+      install:
 
-    install:
+        - docker-compose up -d &
+        - sleep 20
+        - java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
+        - sleep 20
 
-      - docker-compose up -d &
-      - sleep 20
-      - java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
-      - sleep 20
 
     services:
       - mysql
@@ -35,21 +35,22 @@ for:
       - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:mysql://localhost:3306/app
 
 
-  - matrix:
-      only:
-        - db: PostgreSQL
+matrix:
+  only:
+    - db: PostgreSQL
 
 
-    install:
+  install:
 
-      - docker-compose up -d &
-      - sleep 20
-      - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
-      - sleep 20
+    - docker-compose up -d &
+    - sleep 20
+    - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
+    - sleep 20
 
-    services:
-      - postgresql
 
-    build_script:
-      - chmod +x gradlew
-      - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
+  services:
+    - postgresql
+
+  build_script:
+    - chmod +x gradlew
+    - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
