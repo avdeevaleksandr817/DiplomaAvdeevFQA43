@@ -8,15 +8,18 @@ branches:
 
 build: off
 
+
 environment:
   matrix:
+    - db: MySQL
+    - db: PostgreSQL
+for:
+  - matrix:
+      only:
+        - db: MySQL
+    services:
+      - mysql
 
-    for:
-      - matrix:
-          only:
-            - db: MySQL
-        services:
-          - mysql
 
     install:
       - chmod +x gradlew
