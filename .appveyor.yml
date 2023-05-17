@@ -46,7 +46,7 @@ install:
   - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
   - sleep 30
 
-provider: postgresql
+
 
 build_script:
   - chmod +x gradlew
