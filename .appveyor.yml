@@ -42,9 +42,9 @@ install:
   - docker-compose version
   - docker-compose build
   - docker-compose up -d &
-  - sleep 60
+  - sleep 120
   - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
-  - sleep 60
+  - sleep 120
 
 build_script:
   - chmod +x gradlew
