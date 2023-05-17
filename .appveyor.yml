@@ -17,8 +17,8 @@ for:
   - matrix:
       only:
         - db: MySQL
-    services:
-      - mysql
+      services:
+        - mysql
 
 
     install:
@@ -35,21 +35,21 @@ for:
       - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:mysql://localhost:3306/app
 
 
-      - matrix:
-          only:
-            - db: PostgreSQL
-        services:
-          - postgresql
+  - matrix:
+      only:
+        - db: PostgreSQL
+      services:
+        - postgresql
 
-        install:
-          - chmod +x gradlew
-          - docker-compose version
-          - docker-compose build
-          - docker-compose up -d &
-          - sleep 30
-          - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
-          - sleep 30
+      install:
+        - chmod +x gradlew
+        - docker-compose version
+        - docker-compose build
+        - docker-compose up -d &
+        - sleep 30
+        - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
+        - sleep 30
 
-        build_script:
-          - chmod +x gradlew
-          - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
+      build_script:
+        - chmod +x gradlew
+        - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
