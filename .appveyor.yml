@@ -9,9 +9,7 @@ branches:
 build: off
 
 environment:
-  matrix:
-
-    - db: PostgresSQL
+ - db: PostgresSQL
 
 for:
   - matrix:
