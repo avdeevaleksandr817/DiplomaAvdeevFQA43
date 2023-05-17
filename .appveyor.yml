@@ -10,7 +10,7 @@ build: off
 
 environment:
   matrix:
-#    - db: MySQL
+    #    - db: MySQL
     - db: PostgreSQL
 
 #for:
@@ -37,16 +37,16 @@ environment:
 #      only:
 #        - db: PostgreSQL
 
-  install:
-      - chmod +x gradlew
-      - docker-compose version
-      - docker-compose build
-      - docker-compose up -d &
-      - sleep 60
-      - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
-      - sleep 60
+install:
+  - chmod +x gradlew
+  - docker-compose version
+  - docker-compose build
+  - docker-compose up -d &
+  - sleep 60
+  - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
+  - sleep 60
 
-  build_script:
-      - chmod +x gradlew
-      - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
-      - docker-compose down
+build_script:
+  - chmod +x gradlew
+  - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
+  - docker-compose down
