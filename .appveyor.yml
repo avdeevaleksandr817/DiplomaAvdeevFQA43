@@ -9,12 +9,9 @@ branches:
 build: off
 
 environment:
- - db: PostgresSQL
-
-for:
-  - matrix:
-      only:
-        - db: PostgreSQL
+  matrix:
+    only:
+      - db: PostgreSQL
 
     install:
       - chmod +x gradlew
