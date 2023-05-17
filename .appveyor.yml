@@ -17,8 +17,8 @@ for:
   - matrix:
       only:
         - db: MySQL
-      services:
-        - mysql
+#      services:
+#        - mysql
 
 
     install:
@@ -38,8 +38,8 @@ for:
   - matrix:
       only:
         - db: PostgreSQL
-      services:
-        - postgresql
+#      services:
+#        - postgresql
 
       install:
         - chmod +x gradlew
