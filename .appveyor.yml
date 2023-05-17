@@ -41,14 +41,13 @@ environment:
   - chmod +x gradlew
   - docker-compose version
   - docker-compose build
+
+
+  build_script:
   - docker-compose up -d &
   - sleep 30
   - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar &
   - sleep 30
-
-
-
-  build_script:
   - chmod +x gradlew
   - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
   - docker-compose down
