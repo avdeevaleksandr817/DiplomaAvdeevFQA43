@@ -37,7 +37,7 @@ environment:
 #      only:
 #        - db: PostgreSQL
 
-install:
+  install:
   - chmod +x gradlew
   - docker-compose version
   - docker-compose build
@@ -48,7 +48,7 @@ install:
 
 
 
-build_script:
+  build_script:
   - chmod +x gradlew
   - ./gradlew test --info -Dselenide.headless=true -DdbUrl=jdbc:postgresql://localhost:5432/app
   - docker-compose down
