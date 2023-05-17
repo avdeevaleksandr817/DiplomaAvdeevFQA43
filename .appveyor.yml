@@ -14,9 +14,10 @@ environment:
     - db: PostgresSQL
 
 for:
-  - matrix:
+  -
+    matrix:
       only:
-      - db: MySQL
+        - db: MySQL
 
     install:
       - chmod +x gradlew
@@ -33,9 +34,10 @@ for:
       - docker-compose down
 
 
-  - matrix:
+  -
+    matrix:
       only:
-      - db: PostgreSQL
+        - db: PostgreSQL
 
     install:
       - chmod +x gradlew
