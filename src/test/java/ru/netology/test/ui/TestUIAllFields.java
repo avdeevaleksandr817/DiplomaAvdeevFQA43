@@ -47,7 +47,6 @@ public class TestUIAllFields {
         SelenideLogger.removeListener("allure");
     }
 
-    //    Тестирование UI
     //успешный переход на оплату картой
     @Test
     @DisplayName("Test№ 1 successful transition to card payment")
@@ -63,7 +62,6 @@ public class TestUIAllFields {
         val mainPage = new MainPage();
         mainPage.chooseCreditOnCard();
     }
-
 
     //    Успешная оплата тура "Путешествие дня" при валидном заполнение полей формы "Оплата по карте" по действующей карте
     //    (номер карты заполнен с пробелами после каждых 4 символов) Ожидаемый результат: появление сообщения об успешной оплате тура

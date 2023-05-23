@@ -21,7 +21,6 @@ public class TestAPIPaymentCard {
     public void cleanTable() {
         SQLHelper.cleanDatabase();
     }
-
     @AfterAll
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
